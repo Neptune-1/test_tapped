@@ -36,7 +36,7 @@ class SearchField extends StatelessWidget {
               )
             : SearchItem(
                 key: Key(index.toString()),
-                title: searchString.capitalize() + ' and other stories ' + ['I', 'II', 'III'][index ~/ 2],
+                title: searchString.capitalize() + ' and other stories ' + 'I'*(index ~/ 2+1),
                 subtitle: 'A lot of authors',
               ),
       ),
@@ -67,8 +67,9 @@ class SearchField extends StatelessWidget {
             ),
             child: Material(
               child: Ink(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
                   children: [
                     GestureDetector(
                       behavior: HitTestBehavior.translucent,

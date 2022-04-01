@@ -14,6 +14,8 @@ class SearchItem extends StatelessWidget {
   // continue item width = new item height
   final double itemHeight = (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 * 0.8;
 
+  String title2seed(String s) => s.codeUnits.join('');
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -31,7 +33,7 @@ class SearchItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(itemHeight * 0.1),
                 child: Image.network(
-                  "https://picsum.photos/seed/2$key/200",
+                  "https://picsum.photos/seed/${title2seed(title)}/200",
                   fit: BoxFit.cover,
                   width: itemHeight * 54 / 80,
                   height: itemHeight,
