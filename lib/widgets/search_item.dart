@@ -21,9 +21,9 @@ class SearchItem extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: Style.screenHorizontalPadding,
-          vertical: Style.screenHorizontalPadding * 0.25,
+          vertical: Style.screenHorizontalPadding * 0.5,
         ),
-        height: itemHeight + Style.screenHorizontalPadding * 0.5,
+        height: itemHeight + Style.screenHorizontalPadding * 1,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -33,7 +33,7 @@ class SearchItem extends StatelessWidget {
                 child: Image.network(
                   "https://picsum.photos/seed/2$key/200",
                   fit: BoxFit.cover,
-                  width: itemHeight * 0.75,
+                  width: itemHeight * 54 / 80,
                   height: itemHeight,
                   frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
                     if (wasSynchronouslyLoaded) return child;
@@ -42,7 +42,7 @@ class SearchItem extends StatelessWidget {
                       child: frame == null
                           ? Container(
                               color: Style.lightGreyColor.withOpacity(0.5),
-                              width: itemHeight * 0.75,
+                              width: itemHeight * 54 / 80,
                               height: itemHeight,
                             )
                           : child,

@@ -119,11 +119,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: Style.blockH * 0.2,
+                  height: Style.blockH * 0.3,
                 ),
                 getContinueItems(),
-                Container(
-                  height: Style.blockH * 0.6,
+                Padding(
                   padding: EdgeInsets.only(left: Style.screenHorizontalPadding),
                   child: Text(
                     "New",

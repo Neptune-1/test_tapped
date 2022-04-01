@@ -22,7 +22,7 @@ class SearchField extends StatelessWidget {
   Widget getSearchItems({required String searchString}) {
     return ListView(
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(vertical: Style.blockH * 0.5),
+      padding: EdgeInsets.only(bottom: Style.blockH * 0.5),
       children: List.generate(
         // Fill with n items and n-1 dividers
         (numberOfSearchItems * 2 - 1),
@@ -70,13 +70,13 @@ class SearchField extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: Style.blockW * 20,
-                      height: Style.blockH * 1.3,
-                      padding: EdgeInsets.symmetric(horizontal: Style.screenHorizontalPadding * 2),
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: searchFieldFocusNode.requestFocus,
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: searchFieldFocusNode.requestFocus,
+                      child: Container(
+                        width: Style.blockW * 20,
+                        height: Style.blockH * 1.3,
+                        padding: EdgeInsets.symmetric(horizontal: Style.screenHorizontalPadding * 1.3),
                         child: Center(
                           child: Row(
                             children: [
@@ -118,8 +118,8 @@ class SearchField extends StatelessWidget {
                     AnimatedContainer(
                       height: (snapshot.data ?? false ? numberOfSearchItems : 0) *
                               ((Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 * 0.8 +
-                                  Style.screenHorizontalPadding * 0.5) +
-                          (snapshot.data ?? false ? Style.blockH : 0),
+                                  Style.screenHorizontalPadding) +
+                          (snapshot.data ?? false ? Style.blockH * 0.5 : 0),
                       duration: Style.standardAnimationDuration,
                       child: AnimatedSwitcher(
                         duration: Style.standardAnimationDuration,
