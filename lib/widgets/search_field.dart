@@ -36,7 +36,8 @@ class SearchField extends StatelessWidget {
               )
             : SearchItem(
                 key: Key(index.toString()),
-                title: searchString.capitalize() + ' and other stories ' + 'I'*(index ~/ 2+1),
+                //create title using input and position
+                title: searchString.capitalize() + ' and other stories ' + 'I' * (index ~/ 2 + 1),
                 subtitle: 'A lot of authors',
               ),
       ),
@@ -61,7 +62,9 @@ class SearchField extends StatelessWidget {
                 BoxShadow(
                   blurRadius: 10,
                   spreadRadius: 3,
-                  color: Style.shadowColor.withOpacity((snapshot.data ?? false) ? 0.3 : 0.1),
+                  color: Style.shadowColor.withOpacity(
+                    (snapshot.data ?? false) ? 0.3 : 0.1,
+                  ), // make the shadow darker if the user is searching
                 ),
               ],
             ),
@@ -117,6 +120,7 @@ class SearchField extends StatelessWidget {
                       ),
                     ),
                     AnimatedContainer(
+                      // number of items * item width ( _[item]_[item]_[item]_) * aspect + padding if search result is not empty
                       height: (snapshot.data ?? false ? numberOfSearchItems : 0) *
                               ((Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 * 0.8 +
                                   Style.screenHorizontalPadding) +

@@ -23,7 +23,10 @@ class Style {
 
   static TextStyle getSearchTextStyle({bool hint = false}) {
     return GoogleFonts.rubik(
-        fontSize: Style.blockW * 1, fontWeight: FontWeight.w400, color: hint ? lightGreyColor : Colors.black);
+      fontSize: Style.blockW * 1,
+      fontWeight: FontWeight.w400,
+      color: hint ? lightGreyColor : Colors.black,
+    );
   }
 
   static TextStyle getTitleTextStyle() {
@@ -43,7 +46,8 @@ class Style {
   }
 
   static void init(BuildContext context) {
-    blockW = MediaQuery.of(context).size.width / 20; // 1 block = 5% screen's size
-    blockH = MediaQuery.of(context).size.height / 20; // 1 block = 5% screen's size
+    // almost all sizes are represented in blocks, so the design is well scalable
+    blockW = MediaQuery.of(context).size.width / 20; // 1 block = 5% of screen size
+    blockH = MediaQuery.of(context).size.height / 20; // 1 block = 5% of screen size
   }
 }

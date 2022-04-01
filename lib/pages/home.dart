@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     chosenItemsNumberStream = chosenItemsNumberSteamController.stream.asBroadcastStream();
     searchFieldFocusNode.addListener(
+      // open search overlay if the input is not empty and the search field is in the focus
       () => showSearchResults.add(searchFieldTextController.text.isNotEmpty && searchFieldFocusNode.hasPrimaryFocus),
     );
     super.initState();
@@ -36,9 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     chosenItemsNumberSteamController.close();
+    showSearchResults.close();
     super.dispose();
   }
 
+  // function to close keyboard, search overlay, and clear choice of continue item
   void clearScreen() {
     chosenItemsNumberSteamController.add(null);
     showSearchResults.add(false);
@@ -47,8 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget getContinueItems() {
     return SizedBox(
+      // height of ContinueWidget + spare space
       height: (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 + Style.blockH * 1.7,
-      //height of ContinueWidget + spare space
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: List.generate(
@@ -87,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
               key: Key(index.toString()),
               title: 'My Book Cover',
               subtitle: 'A lot of authors',
+              // random date in 2021 year
               addedTime: DateTime.utc(
                 2021,
                 Random().nextInt(11) + 1,

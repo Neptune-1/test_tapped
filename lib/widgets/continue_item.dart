@@ -20,7 +20,8 @@ class ContinueItem extends StatelessWidget {
     required this.chosenStreamController,
   }) : super(key: key);
 
-  final double itemWidth = (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3; // _[item]_[item]_[item]_
+  final double itemWidth =
+      (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3; // due to  _[item]_[item]_[item]_
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class ContinueItem extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: itemWidth,
                     height: itemWidth,
+                    // show the colored form while loading the item
                     frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
                       if (wasSynchronouslyLoaded) return child;
                       return AnimatedSwitcher(

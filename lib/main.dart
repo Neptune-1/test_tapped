@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Builder(
         builder: (context) {
-          Style.init(context);
+          Style.init(context); // block size initialization
           return const MyHomePage();
         },
       ),

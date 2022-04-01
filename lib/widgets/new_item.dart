@@ -39,6 +39,7 @@ class NewItem extends StatelessWidget {
                   fit: BoxFit.cover,
                   width: itemHeight * 0.75,
                   height: itemHeight,
+                  // show the colored form while loading the item
                   frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
                     if (wasSynchronouslyLoaded) return child;
                     return AnimatedSwitcher(

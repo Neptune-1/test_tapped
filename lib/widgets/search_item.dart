@@ -11,7 +11,7 @@ class SearchItem extends StatelessWidget {
     required this.subtitle,
   }) : super(key: key);
 
-  // continue item width = new item height
+  // continue item width = new item height  // due to  _[item]_[item]_[item]_
   final double itemHeight = (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 * 0.8;
 
   String title2seed(String s) => s.codeUnits.join('');
@@ -33,10 +33,11 @@ class SearchItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(itemHeight * 0.1),
                 child: Image.network(
-                  "https://picsum.photos/seed/${title2seed(title)}/200",
+                  "https://picsum.photos/seed/${title2seed(title)}/200", // new title = new image
                   fit: BoxFit.cover,
                   width: itemHeight * 54 / 80,
                   height: itemHeight,
+                  // show the colored form while loading the item
                   frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
                     if (wasSynchronouslyLoaded) return child;
                     return AnimatedSwitcher(
