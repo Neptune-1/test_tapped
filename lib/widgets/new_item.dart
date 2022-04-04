@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:test_tapped/other/data_models.dart';
 import 'package:test_tapped/other/styles.dart';
 
 class NewItem extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final DateTime addedTime;
+  final Book? book;
 
   NewItem({
     Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.addedTime,
+    this.book,
   }) : super(key: key);
 
   // continue item width = new item height
@@ -34,26 +31,32 @@ class NewItem extends StatelessWidget {
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(itemHeight * 0.1),
-                child: Image.network(
-                  "https://picsum.photos/seed/1$key/200",
-                  fit: BoxFit.cover,
-                  width: itemHeight * 0.75,
-                  height: itemHeight,
-                  // show the colored form while loading the item
-                  frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
-                    if (wasSynchronouslyLoaded) return child;
-                    return AnimatedSwitcher(
-                      duration: Style.standardAnimationDuration,
-                      child: frame == null
-                          ? Container(
-                              color: Style.lightGreyColor.withOpacity(0.5),
-                              width: itemHeight * 0.75,
-                              height: itemHeight,
-                            )
-                          : child,
-                    );
-                  },
-                ),
+                child: book == null
+                    ? Container(
+                        color: Style.lightGreyColor.withOpacity(0.5),
+                        width: itemHeight * 0.75,
+                        height: itemHeight,
+                      )
+                    : Image.network(
+                        book!.photoUrl,
+                        fit: BoxFit.cover,
+                        width: itemHeight * 0.75,
+                        height: itemHeight,
+                        // show the colored form while loading the item
+                        frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
+                          if (wasSynchronouslyLoaded) return child;
+                          return AnimatedSwitcher(
+                            duration: Style.standardAnimationDuration,
+                            child: frame == null
+                                ? Container(
+                                    color: Style.lightGreyColor.withOpacity(0.5),
+                                    width: itemHeight * 0.75,
+                                    height: itemHeight,
+                                  )
+                                : child,
+                          );
+                        },
+                      ),
               ),
             ),
             Expanded(
@@ -65,7 +68,7 @@ class NewItem extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        title,
+                        book == null ? "loading …" : book!.title,
                         overflow: TextOverflow.ellipsis,
                         style: Style.getBookTitleTextStyle(),
                       ),
@@ -75,7 +78,7 @@ class NewItem extends StatelessWidget {
                     ),
                     Flexible(
                       child: Text(
-                        subtitle,
+                        book == null ? "loading …" : book!.subtitle,
                         overflow: TextOverflow.ellipsis,
                         style: Style.getBookSubtitleTextStyle(),
                       ),
@@ -94,7 +97,7 @@ class NewItem extends StatelessWidget {
                           width: Style.blockW * 0.2,
                         ),
                         Text(
-                          DateFormat('dd MMM yyyy').format(addedTime).toString(),
+                          book == null ? "loading …" : DateFormat('dd MMM yyyy').format(book!.addedTime).toString(),
                           overflow: TextOverflow.ellipsis,
                           style: Style.getBookSubtitleTextStyle(date: true),
                         ),
@@ -104,9 +107,19 @@ class NewItem extends StatelessWidget {
                 ),
               ),
             ),
-            SvgPicture.asset(
-              "assets/bell_icon.svg",
+            Container(
               height: itemHeight * 0.4,
+              width: itemHeight * 0.4,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(itemHeight * 0.1),
+                border: Border.all(color: Style.lightGreyColor_1, width: Style.blockW * 0.06),
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  "assets/bell_icon.svg",
+                  height: itemHeight * 0.2,
+                ),
+              ),
             ),
           ],
         ),

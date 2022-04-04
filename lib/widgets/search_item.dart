@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:test_tapped/other/styles.dart';
+import 'package:test_tapped/widgets/continue_item.dart';
+
+import '../other/data_models.dart';
 
 class SearchItem extends StatelessWidget {
-  final String title;
-  final String subtitle;
+  final Book book;
 
-  SearchItem({
+  const SearchItem({
     Key? key,
-    required this.title,
-    required this.subtitle,
+    required this.book,
   }) : super(key: key);
 
-  // continue item width = new item height  // due to  _[item]_[item]_[item]_
-  final double itemHeight = (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3 * 0.8;
+  static final double itemHeight = ContinueItem.itemHeight * 0.8;
 
   String title2seed(String s) => s.codeUnits.join('');
 
@@ -33,7 +33,7 @@ class SearchItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(itemHeight * 0.1),
                 child: Image.network(
-                  "https://picsum.photos/seed/${title2seed(title)}/200", // new title = new image
+                  book.photoUrl, // new title = new image
                   fit: BoxFit.cover,
                   width: itemHeight * 54 / 80,
                   height: itemHeight,
@@ -63,7 +63,7 @@ class SearchItem extends StatelessWidget {
                   SizedBox(
                     width: Style.blockW * 20 - (itemHeight * 0.75 + Style.screenHorizontalPadding * 4),
                     child: Text(
-                      title,
+                      book.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Style.getBookTitleTextStyle(),
@@ -74,7 +74,7 @@ class SearchItem extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      subtitle,
+                      book.subtitle,
                       overflow: TextOverflow.ellipsis,
                       style: Style.getBookSubtitleTextStyle(),
                     ),

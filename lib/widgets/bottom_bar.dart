@@ -31,9 +31,22 @@ class BottomBar extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset(
-                    "assets/bottom_0.svg",
-                    height: Style.blockH,
+                  Container(
+
+                    padding: EdgeInsets.symmetric(horizontal: Style.blockH * 0.35, vertical: Style.blockH * 0.2),
+                    decoration: BoxDecoration(
+                        color: Style.backgroundColor, borderRadius: BorderRadius.circular(Style.blockH * 0.3),),
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/bottom_0.svg",
+                          height: Style.blockH * 0.6,
+                          width: Style.blockH * 0.6,
+                        ),
+                        SizedBox(width:  Style.blockH * 0.2,),
+                        Text("Home", style: Style.getBottomBarTextStyle())
+                      ],
+                    ),
                   ),
                   SvgPicture.asset(
                     "assets/bottom_1.svg",

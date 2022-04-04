@@ -4,24 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:test_tapped/other/data_models.dart';
 import 'package:test_tapped/other/styles.dart';
 
 class ContinueItem extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Stream<Key?> chosenStream;
-  final StreamController<Key?> chosenStreamController;
+  final Book? book;
+  final Stream<Key?>? chosenStream;
+  final StreamController<Key?>? chosenStreamController;
 
-  ContinueItem({
+  const ContinueItem({
     Key? key,
-    required this.title,
-    required this.subtitle,
-    required this.chosenStream,
-    required this.chosenStreamController,
+    this.book,
+    this.chosenStream,
+    this.chosenStreamController,
   }) : super(key: key);
 
-  final double itemWidth =
+  static final double itemWidth =
       (Style.blockW * 20 - Style.screenHorizontalPadding * 4) / 3; // due to  _[item]_[item]_[item]_
+  static final double itemHeight = itemWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -30,33 +30,37 @@ class ContinueItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          StreamBuilder(
-            stream: chosenStream,
-            builder: (context, snapshot) => AnimatedContainer(
-              height: snapshot.data == key ? Style.blockH * 0.1 : 0,
-              duration: Style.fastAnimationDuration,
-            ),
-          ),
+          book == null
+              ? Container()
+              : StreamBuilder(
+                  stream: chosenStream,
+                  builder: (context, snapshot) => AnimatedContainer(
+                    height: snapshot.data == key ? Style.blockH * 0.1 : 0,
+                    duration: Style.fastAnimationDuration,
+                  ),
+                ),
           SizedBox(
             height: itemWidth,
             width: itemWidth,
             child: Stack(
               children: [
                 ClipOval(
-                  child: Image.network(
-                    "https://picsum.photos/seed/$key/200",
-                    fit: BoxFit.cover,
-                    width: itemWidth,
-                    height: itemWidth,
-                    // show the colored form while loading the item
-                    frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
-                      if (wasSynchronouslyLoaded) return child;
-                      return AnimatedSwitcher(
-                        duration: Style.standardAnimationDuration,
-                        child: frame == null ? Container(color: Style.lightGreyColor.withOpacity(0.5)) : child,
-                      );
-                    },
-                  ),
+                  child: book == null
+                      ? Container(color: Style.lightGreyColor.withOpacity(0.5))
+                      : Image.network(
+                          book!.photoUrl,
+                          fit: BoxFit.cover,
+                          width: itemWidth,
+                          height: itemWidth,
+                          // show the colored form while loading the item
+                          frameBuilder: (ctx, child, frame, wasSynchronouslyLoaded) {
+                            if (wasSynchronouslyLoaded) return child;
+                            return AnimatedSwitcher(
+                              duration: Style.standardAnimationDuration,
+                              child: frame == null ? Container(color: Style.lightGreyColor.withOpacity(0.5)) : child,
+                            );
+                          },
+                        ),
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
@@ -64,7 +68,7 @@ class ContinueItem extends StatelessWidget {
                     onTap: () {
                       FocusManager.instance.primaryFocus?.unfocus();
                       HapticFeedback.heavyImpact();
-                      chosenStreamController.add(key);
+                      if (book != null) chosenStreamController!.add(key);
                     },
                     child: SvgPicture.asset(
                       "assets/play_btn.svg",
@@ -81,7 +85,7 @@ class ContinueItem extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              title,
+              book == null ? "loading …" : book!.title,
               overflow: TextOverflow.ellipsis,
               style: Style.getBookTitleTextStyle(),
             ),
@@ -91,7 +95,7 @@ class ContinueItem extends StatelessWidget {
           ),
           Flexible(
             child: Text(
-              subtitle,
+              book == null ? "loading …" : book!.subtitle,
               overflow: TextOverflow.ellipsis,
               style: Style.getBookSubtitleTextStyle(),
             ),
